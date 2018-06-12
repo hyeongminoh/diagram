@@ -17,19 +17,31 @@ module.exports = function(app){
   var fs = require('fs');
 
   app.get('/', function(req, res, next) {
-    res.render('index');
+    const sess = req.session;
+    res.render('index', {
+                session : sess
+    });
   });
 
   app.get('/about', function(req, res, next) {
-    res.render('about');
+    const sess = req.session;
+    res.render('about', {
+                session : sess
+    });
   });
 
   app.get('/contact', function(req, res, next) {
-    res.render('contact');
+    const sess = req.session;
+    res.render('contact', {
+                session : sess
+    });
   });
 
   app.get('/post', function(req, res, next) {
-    res.render('post');
+    const sess = req.session;
+    res.render('post', {
+                session : sess
+    });
   });
 
   app.get('/signup', function(req, res, next) {
@@ -39,6 +51,14 @@ module.exports = function(app){
   app.get('/signin', function(req, res, next) {
     res.render('signin');
   });
+
+  //로그아웃 코드
+  app.get('/logout', (req, res) => {
+      req.session.destroy(function (err) {
+      if (err) throw err;
+          res.redirect('/');
+      });
+});
 
 
   //회원 가입 진행 코드
@@ -64,5 +84,67 @@ module.exports = function(app){
                      }
             }));
          });
-       });
+    });
+
+    //로그인 코드
+      app.post('/do_signin',  function (req,res){
+         const body = req.body;
+         const email = req.body.email;
+         var pass = sha256(req.body.pass);
+         console.log(body);
+         var flag = false;
+         var id = 0;
+         //유저 찾기
+         db.query('SELECT * FROM `user` WHERE `user_email` = ? LIMIT 1', [email], (err, result) => {
+               if (err) throw err;
+               console.log(result);
+
+               if (result.length === 0) {
+                     console.log('없음');
+                     // res.json({success: false});
+                     res.redirect(url.format({
+                           pathname: '/signin',
+                           query: {
+                                 'success': false,
+                                 'message': 'Login failed: ID does not exist'
+                           }
+                     }));
+               } else {
+                     if (pass != result[0].user_pw) {
+                           console.log('비밀번호 불일치');
+                           res.redirect(url.format({
+                                 pathname: '/signin',
+                                 query: {
+                                       'success': false,
+                                       'message': 'Login failed: Password Incorrect'
+                                 }
+                           }));
+                     } else {
+                           console.log('로그인 성공');
+
+                           //세션에 유저 정보 저장
+                           req.session.user_info = result[0];
+                           flag = true;
+                           id = result[0].user_id;
+                           res.redirect('/');
+                           // db.query('select * from `cart` where `user_id` = ?', [id], (err, result1) => {
+                           //       if (err){
+                           //          console.log(err);
+                           //          res.render('error');
+                           //       }
+                           //
+                           //       req.session.cartnum = result1.length;
+                           //    });
+                           //    db.query('select * from `favorite` where `user_id` = ?', [id], (err, result2) => {
+                           //       if (err){
+                           //          console.log(err);
+                           //          res.render('error');
+                           //       }
+                           //       req.session.wishnum = result2.length;
+                           //       res.redirect('/');
+                           //    });
+                     }
+               }
+         });
+   });
 }

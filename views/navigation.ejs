@@ -31,10 +31,16 @@
           </li>
         <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="signin">"<%= session.user_info.user_nickname %>"</a>
+            <a class="nav-link" href="write">Write</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="signin">Logout</a>
+            <a class="nav-link" href="mypage">"<%= session.user_info.user_nickname %>"</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="mydiary">MyDiary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout">Logout</a>
           </li>
         <% } %>
       </ul>

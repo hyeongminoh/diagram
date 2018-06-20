@@ -12,13 +12,13 @@
     function btn_click(str){
       if(str=="send")
       {
-        alert("회원가입이 완료 되었습니다.");
+        alert("글 작성이 완료 되었습니다.");
 			self.close()
       }
     }
     </script>
 
-    <title>signup</title>
+    <title>Write</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,8 +47,8 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
-              <h1>Sign Up</h1>
-              <span class="subheading">Diagram을 시작하고 싶으세요? 그럼 지금 당장 회원가입하세요.</span>
+              <h1>Wrtie whatever you want</h1>
+              <span class="subheading">Diagram에 글을 써봅시다! </span>
             </div>
           </div>
         </div>
@@ -63,53 +63,39 @@
           <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
           <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
           <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-          <form action="/user_registration" name="user_registration" method = "post">
+          <form action="/do_wirte_post" name="wirte_post" method = "post" enctype="multipart/form-data">
             <div class="control-group">
-              <div class="form-group floating-label-form-group controls">
-                <label>Email Address</label>
-                <input type="email" class="form-control" placeholder="Email Address(ID)" name="email" required data-validation-required-message="Please enter your email address.">
+              <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Photo</label>
+                <input type="file" class="form-control" placeholder="Photo" name="userfile" required data-validation-required-message="Please enter Image.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
-              <div class="form-group floating-label-form-group controls">
-                <label>Name</label>
-                <input type="text" class="form-control" placeholder="Name" name="name" required data-validation-required-message="Please enter your name.">
-                <p class="help-block text-danger"></p>
-              </div>
+              <label for="ShareType">Share To</label>
+              <select name="shareType" class="selectpicker">
+                <option value="0">Only Me</option>
+                <option value="1">Everyone</option>
+              </select>
             </div>
             <div class="control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Password</label>
-                <input type="number" class="form-control" placeholder="Password" name="password" required data-validation-required-message="Please enter your password.">
+                <label>Title</label>
+                <input type="text" class="form-control" placeholder="Title" name="title" required data-validation-required-message="Please enter Title.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Nickname</label>
-                <input type="text" class="form-control" placeholder="Nickname" name="nickname" required data-validation-required-message="Please enter your Nickname.">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Introduce your self</label>
-                <input type="text" class="form-control" placeholder="Introduce your self" name="aboutme" required data-validation-required-message="Please enter your Nickname.">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
-            <!-- <div class="control-group">
               <div class="form-group floating-label-form-group controls">
-                <label>Message</label>
-                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                <label>Story</label>
+                <textarea rows="5" class="form-control" placeholder="Story" name="content" required data-validation-required-message="Please enter a story."></textarea>
                 <p class="help-block text-danger"></p>
               </div>
-            </div> -->
+            </div>
             <br>
             <div id="success"></div>
             <div class="form-group">
-              <button type="submit" onclick='btn_click("send")' class="btn btn-primary" id="sendMessageButton">Sign Up</button>
+              <button type="submit" onclick='btn_click("send")' class="btn btn-primary" id="sendMessageButton">Write</button>
             </div>
           </form>
         </div>

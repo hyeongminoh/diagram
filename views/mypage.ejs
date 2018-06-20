@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>Mypage</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,46 +28,68 @@
 
     <!-- Navigation -->
 
-      <% include ./navigation.ejs %>
+    <% include ./navigation.ejs %>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('img/스누피3.jpg')">
+    <header class="masthead" style="background-image: url('img/스누피1.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="page-heading">
-              <h1>About Diagram</h1>
-              <span class="subheading">This is what Diagram do.</span>
+            <div class="post-heading">
+              <h1>"<%= session.user_info.user_nickname %>"</h1>
+              <h2 class="subheading"><%= session.user_info.user_introduce %></h2>
+              <!-- <span class="meta">Posted by
+                <a href="#">Start Bootstrap</a>
+                on August 24, 2018</span> -->
             </div>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Post Content -->
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <a href="#">
-            <img class="img-fluid" src="img/개발자.jpg" alt="">
-          </a>
-          <div class="post-preview">
-              <h2 class="post-title">
-                Developer: HyeongMin Oh
-              </h2>
-              <h3 class="post-subtitle">
-                instagram id: @stillweare
-              </h3>
-            </div>
-          <p>인스타그램에서 다이어리 기능이 없어 아쉽다구요?</p>
-          <p>다이어리 처럼 쓰다가 공유도 하고 싶다고요?</p>
-          <p>Diagram을 시작하세요!</p>
-        </div>
-      </div>
-    </div>
+     <div class="row">
+       <% posts.forEach(function(post){ %>
+       <div class="col-lg-8 col-md-10 mx-auto">
+         <div class="post-preview">
+           <a href="post.html">
+             <h2 class="post-title">
+                 <%= post.post_title %>
+             </h2>
+             <h3 class="post-subtitle">
+               <%= post.post_content %>
+             </h3>
+             <h3 class="post-subtitle">
+               Share To:
+             <% if(post.post_share == 0 ) { %>
+                  Only Me
+   					<% } else{ %>
+                  Everyone
+             <% } %>
+             </h3>
+             <h3 class="post-subtitle">
+               <%= post.post_date %>
+             </h3>
+             <a href="/post?post_id=<%= post.post_id %>">
+               <img class="img-fluid" src="img/<%= post.post_image %>" alt="">
+             </a>
+           </a>
+             <div class="clearfix">
+               <a class="btn btn-primary float-right" href="/post?post_id=<%= post.post_id %>">Modify &rarr;</a>
+             </div>
+         </div>
+         <hr>
+         <!-- Pager -->
+         <!-- <div class="clearfix">
+           <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+         </div> -->
+       </div>
+       <% }) %>
+     </div>
+   </div>
 
-    <hr>
 
     <!-- Footer -->
     <footer>
